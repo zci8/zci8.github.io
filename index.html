@@ -19,6 +19,7 @@ body {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle, #1a0000, black);
+  cursor: pointer;
 }
 
 /* MAIN CARD */
@@ -66,26 +67,35 @@ h1 {
   box-shadow: 0 0 20px red;
 }
 
-/* MUSIC BUTTON */
-.music-btn {
+/* MUSIC PANEL */
+.music-panel {
   margin-top: 15px;
-  padding: 12px 18px;
-  border-radius: 10px;
+  padding: 12px;
   border: 1px solid red;
-  background: rgba(30,0,0,0.6);
+  border-radius: 12px;
+  background: rgba(30,0,0,0.5);
+}
+
+.music-btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid red;
+  background: rgba(20,0,0,0.7);
   color: white;
   cursor: pointer;
-  transition: 0.2s;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 .music-btn:hover {
-  transform: scale(1.05);
   box-shadow: 0 0 15px red;
 }
 
-/* HIDDEN AUDIO */
-audio {
-  display: none;
+/* VOLUME SLIDER */
+input[type="range"] {
+  width: 100%;
+  accent-color: red;
+  margin-top: 8px;
 }
 
 .small {
@@ -108,12 +118,19 @@ audio {
 
   <div class="link">🎮 Ubisoft Connect: zci8</div>
 
-  <!-- MUSIC BUTTON -->
-  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
-    ▶ Play Music
-  </button>
+  <!-- MUSIC CONTROLS -->
+  <div class="music-panel">
 
-  <div class="small">stable build — local audio only</div>
+    <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+      ▶ Play Music
+    </button>
+
+    <label>Volume</label>
+    <input type="range" min="0" max="100" value="100" id="volumeSlider">
+
+  </div>
+
+  <div class="small">click anywhere once to enable audio</div>
 
 </div>
 
@@ -124,17 +141,32 @@ audio {
 
 <script>
 let playing = false;
+let unlocked = false;
 
+const music = document.getElementById("music");
+const btn = document.getElementById("musicBtn");
+const volumeSlider = document.getElementById("volumeSlider");
+
+/* SET INITIAL VOLUME */
+music.volume = 1.0;
+
+/* CLICK ANYWHERE UNLOCK + AUTO START */
+document.addEventListener("click", () => {
+  if (!unlocked) {
+    music.play().then(() => {
+      music.pause();
+      music.currentTime = 0;
+      unlocked = true;
+    }).catch(() => {});
+  }
+});
+
+/* PLAY / PAUSE BUTTON */
 function toggleMusic() {
-  const music = document.getElementById("music");
-  const btn = document.getElementById("musicBtn");
-
   if (!playing) {
     music.play().then(() => {
       playing = true;
       btn.innerText = "⏸ Pause Music";
-    }).catch(err => {
-      console.log("Playback blocked:", err);
     });
   } else {
     music.pause();
@@ -142,6 +174,11 @@ function toggleMusic() {
     btn.innerText = "▶ Play Music";
   }
 }
+
+/* VOLUME CONTROL */
+volumeSlider.addEventListener("input", () => {
+  music.volume = volumeSlider.value / 100;
+});
 </script>
 
 </body>
