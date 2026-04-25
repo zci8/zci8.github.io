@@ -37,7 +37,7 @@ body {
   to { filter: brightness(1.3); }
 }
 
-/* MAIN CARD */
+/* MAIN */
 .container {
   text-align: center;
   padding: 30px;
@@ -86,7 +86,7 @@ h1 {
   box-shadow: 0 0 20px red;
 }
 
-/* COPIED POPUP */
+/* POPUP */
 .copied {
   position: fixed;
   bottom: 40px;
@@ -108,12 +108,12 @@ h1 {
   100% { opacity: 0; }
 }
 
-/* hidden audio trigger button (invisible) */
-#startAudio {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  opacity: 0;
+/* hidden youtube */
+#iframeWrap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
 </style>
 </head>
@@ -135,15 +135,23 @@ h1 {
   </div>
 
   <div style="margin-top:10px; font-size:12px; opacity:0.6;">
-    made by zci8
+    click anywhere to start music
   </div>
 
 </div>
 
 <div id="copied" class="copied">Copied!</div>
 
-<!-- 🔊 AUDIO (you must add your own file) -->
-<audio id="introSound" src="intro.mp3"></audio>
+<!-- HIDDEN YOUTUBE PLAYER -->
+<div id="iframeWrap">
+  <iframe
+    id="yt"
+    width="0"
+    height="0"
+    src=""
+    allow="autoplay">
+  </iframe>
+</div>
 
 <script>
 function copyText() {
@@ -153,14 +161,16 @@ function copyText() {
   popup.classList.remove('show');
   void popup.offsetWidth;
   popup.classList.add('show');
-
-  // 🔊 play sound on interaction (THIS WORKS in browsers)
-  const audio = document.getElementById('introSound');
-  if (audio) {
-    audio.volume = 0.5;
-    audio.play().catch(() => {});
-  }
 }
+
+/* CLICK TO START MUSIC */
+document.addEventListener("click", function startMusic() {
+  const yt = document.getElementById("yt");
+
+  yt.src = "https://www.youtube.com/embed/7aMOurgDB-o&list=RD7aMOurgDB-o&start_radio=1?autoplay=1&loop=1&playlist=VIDEO_ID_HERE";
+
+  document.removeEventListener("click", startMusic);
+});
 </script>
 
 </body>
