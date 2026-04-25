@@ -5,37 +5,49 @@
 <title>zci8</title>
 
 <style>
-body {
+* {
   margin: 0;
-  font-family: Arial;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   background: radial-gradient(circle, #1a0000, black);
 }
 
+/* MAIN CARD */
 .container {
   text-align: center;
   padding: 30px;
   border-radius: 20px;
   background: rgba(10,0,0,0.6);
   box-shadow: 0 0 30px red;
+  max-width: 320px;
 }
 
+/* PROFILE */
 .profile-pic {
   width: 110px;
   height: 110px;
   border-radius: 50%;
   border: 3px solid red;
   box-shadow: 0 0 20px red;
+  object-fit: cover;
 }
 
 h1 {
+  margin-top: 10px;
   color: #ff2a2a;
+  text-shadow: 0 0 10px red;
 }
 
+/* LINKS */
 .link {
   display: block;
   margin: 12px auto;
@@ -46,6 +58,34 @@ h1 {
   border: 1px solid red;
   color: white;
   text-decoration: none;
+  transition: 0.2s;
+}
+
+.link:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px red;
+}
+
+/* MUSIC BUTTON (SAFE) */
+.music-btn {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid red;
+  background: rgba(30,0,0,0.6);
+  color: white;
+  cursor: pointer;
+}
+
+/* OPTIONAL AUDIO */
+audio {
+  display: none;
+}
+
+.small {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -62,7 +102,33 @@ h1 {
 
   <div class="link">🎮 Ubisoft Connect: zci8</div>
 
+  <!-- SAFE MUSIC (LOCAL FILE ONLY) -->
+  <button class="music-btn" onclick="toggleMusic()">▶ Play / Pause Music</button>
+
+  <div class="small">stable build — no external scripts</div>
+
 </div>
+
+<!-- LOCAL AUDIO FILE (optional) -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let playing = false;
+
+function toggleMusic() {
+  const music = document.getElementById("music");
+
+  if (!playing) {
+    music.play().catch(() => {});
+    playing = true;
+  } else {
+    music.pause();
+    playing = false;
+  }
+}
+</script>
 
 </body>
 </html>
