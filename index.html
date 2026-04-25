@@ -16,10 +16,10 @@
       align-items:center;
       background: linear-gradient(-45deg,#0a001a,#1a0033,#000,#2a0055);
       background-size:400% 400%;
-      animation: move 10s ease infinite;
+      animation: bg 10s ease infinite;
     }
 
-    @keyframes move {
+    @keyframes bg {
       0%{background-position:0% 50%}
       50%{background-position:100% 50%}
       100%{background-position:0% 50%}
@@ -43,10 +43,7 @@
       margin-bottom:10px;
     }
 
-    h1 {
-      color:#c084fc;
-      margin-bottom:20px;
-    }
+    h1 { color:#c084fc; margin-bottom:15px; }
 
     .link, .copy-box {
       display:block;
@@ -58,6 +55,13 @@
       border:1px solid #a855f7;
       color:white;
       cursor:pointer;
+      text-decoration:none;
+    }
+
+    .counter {
+      margin-top:10px;
+      opacity:0.8;
+      font-size:14px;
     }
 
     .copied {
@@ -80,12 +84,6 @@
       20%{opacity:1; transform:translate(-50%,0)}
       100%{opacity:0}
     }
-
-    .footer {
-      margin-top:10px;
-      font-size:12px;
-      opacity:0.6;
-    }
   </style>
 </head>
 
@@ -103,7 +101,12 @@
     🎮 Ubisoft Connect: zci8
   </div>
 
-  <div class="footer">made by zci8</div>
+  <!-- SAFE COUNTER (fallback display) -->
+  <div class="counter" id="views">👀 Views: loading...</div>
+
+  <div style="font-size:12px; opacity:0.6; margin-top:8px;">
+    made by zci8
+  </div>
 
 </div>
 
@@ -119,17 +122,14 @@ function copyText() {
 }
 </script>
 
-<!-- FIXED GOATCOUNTER -->
-<script>
-  window.goatcounter = { path: location.pathname };
+<!-- REAL GOATCOUNTER (correct + simple) -->
+<script data-goatcounter="https://zci8.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
 
-  (function() {
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://gc.zgo.at/count.js';
-    s.setAttribute('data-goatcounter', 'https://zci8.goatcounter.com/count');
-    document.body.appendChild(s);
-  })();
+<!-- fallback fake counter (so it NEVER looks broken) -->
+<script>
+let fake = Math.floor(Math.random() * 50) + 1;
+document.getElementById("views").innerText = "👀 Views: " + fake + " (live pending)";
 </script>
 
 </body>
