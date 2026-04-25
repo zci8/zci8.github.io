@@ -170,11 +170,14 @@
       popup.classList.add('show');
     }
 
-    // View counter
+    // View counter (FIXED)
     fetch('https://api.countapi.xyz/hit/zci8-site/views')
       .then(res => res.json())
       .then(res => {
         document.getElementById('views').innerText = "👀 Views: " + res.value;
+      })
+      .catch(() => {
+        document.getElementById('views').innerText = "👀 Views unavailable";
       });
   </script>
 
