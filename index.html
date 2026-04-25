@@ -87,14 +87,11 @@
       padding: 14px 18px;
       width: 260px;
       border-radius: 14px;
-
       background: rgba(40, 0, 70, 0.6);
       border: 1px solid rgba(168, 85, 247, 0.6);
       box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
-
       cursor: pointer;
       transition: 0.25s ease;
-      user-select: none;
     }
 
     .copy-box:hover {
@@ -102,7 +99,6 @@
       box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
     }
 
-    /* Copied popup */
     .copied {
       position: fixed;
       bottom: 40px;
@@ -113,7 +109,6 @@
       border-radius: 12px;
       font-size: 14px;
       box-shadow: 0 0 20px #a855f7;
-
       opacity: 0;
       pointer-events: none;
     }
@@ -130,9 +125,9 @@
     }
 
     .footer {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 12px;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     @media (max-width: 500px) {
@@ -158,6 +153,7 @@
       🎮 Ubisoft Connect: zci8
     </div>
 
+    <div class="footer" id="views">Loading views...</div>
     <div class="footer">made by zci8</div>
 
   </div>
@@ -170,12 +166,16 @@
 
       const popup = document.getElementById('copied');
       popup.classList.remove('show');
-
-      // restart animation
       void popup.offsetWidth;
-
       popup.classList.add('show');
     }
+
+    // View counter
+    fetch('https://api.countapi.xyz/hit/zci8-site/views')
+      .then(res => res.json())
+      .then(res => {
+        document.getElementById('views').innerText = "👀 Views: " + res.value;
+      });
   </script>
 
 </body>
