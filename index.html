@@ -5,110 +5,47 @@
 <title>zci8</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* BACKGROUND */
 body {
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
+  margin: 0;
+  font-family: Arial;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
   background: radial-gradient(circle, #1a0000, black);
-  overflow: hidden;
 }
 
-.bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, #2a0000, black);
-  animation: pulse 5s infinite alternate;
-  z-index: -1;
-}
-
-@keyframes pulse {
-  from { filter: brightness(0.7); }
-  to { filter: brightness(1.3); }
-}
-
-/* MAIN */
 .container {
   text-align: center;
   padding: 30px;
   border-radius: 20px;
   background: rgba(10,0,0,0.6);
   box-shadow: 0 0 30px red;
-  animation: fadeIn 1s ease;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.profile-pic {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 3px solid red;
-  box-shadow: 0 0 20px red;
-}
-
-h1 {
-  margin-top: 10px;
-  color: #ff2a2a;
-  text-shadow: 0 0 10px red;
-}
-
-/* LINKS */
-.link, .copy-box {
-  display: block;
-  margin: 12px auto;
-  padding: 14px;
-  width: 260px;
-  border-radius: 12px;
-  background: rgba(40,0,0,0.6);
+/* buttons */
+button {
+  padding: 12px 18px;
+  margin: 10px;
+  border-radius: 10px;
   border: 1px solid red;
+  background: rgba(40,0,0,0.6);
   color: white;
   cursor: pointer;
-  text-decoration: none;
-  transition: 0.2s;
 }
 
-.link:hover, .copy-box:hover {
-  transform: scale(1.05);
+button:hover {
   box-shadow: 0 0 20px red;
 }
 
-/* POPUP */
-.copied {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: red;
-  padding: 10px 20px;
-  border-radius: 10px;
-  opacity: 0;
+/* slider */
+input[type="range"] {
+  width: 200px;
+  margin-top: 10px;
 }
 
-.copied.show {
-  animation: pop 1s forwards;
-}
-
-@keyframes pop {
-  0% { opacity: 0; transform: translate(-50%,20px); }
-  20% { opacity: 1; transform: translate(-50%,0); }
-  100% { opacity: 0; }
-}
-
-/* hidden youtube */
+/* hidden player */
 #iframeWrap {
   position: absolute;
   width: 0;
@@ -120,57 +57,72 @@ h1 {
 
 <body>
 
-<div class="bg"></div>
-
 <div class="container">
 
-  <img class="profile-pic" src="pfp.jpg">
-  <h1>@zci8</h1>
+  <h2>@zci8 Music Control</h2>
 
-  <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
-  <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord</a>
+  <button onclick="playMusic()">▶ Play</button>
+  <button onclick="pauseMusic()">⏸ Pause</button>
 
-  <div class="copy-box" onclick="copyText()">
-    🎮 Ubisoft Connect: zci8
-  </div>
+  <br>
 
-  <div style="margin-top:10px; font-size:12px; opacity:0.6;">
-    click anywhere to start music
-  </div>
+  🔊 Volume
+  <br>
+  <input type="range" min="0" max="100" value="50" onchange="setVolume(this.value)">
 
 </div>
 
-<div id="copied" class="copied">Copied!</div>
-
-<!-- HIDDEN YOUTUBE PLAYER -->
+<!-- hidden youtube -->
 <div id="iframeWrap">
-  <iframe
-    id="yt"
+  <iframe id="yt"
     width="0"
     height="0"
     src=""
-    allow="autoplay">
+    allow="autoplay; encrypted-media">
   </iframe>
 </div>
 
 <script>
-function copyText() {
-  navigator.clipboard.writeText('zci8');
+let started = false;
 
-  const popup = document.getElementById('copied');
-  popup.classList.remove('show');
-  void popup.offsetWidth;
-  popup.classList.add('show');
-}
-
-/* CLICK TO START MUSIC */
-document.addEventListener("click", function startMusic() {
+function loadPlayer() {
   const yt = document.getElementById("yt");
 
-  yt.src = "https://www.youtube.com/embed/7aMOurgDB-o&list=RD7aMOurgDB-o&start_radio=1?autoplay=1&loop=1&playlist=VIDEO_ID_HERE";
+  yt.src =
+    "https://www.youtube.com/embed/7aMOurgDB-o" +
+    "?enablejsapi=1&autoplay=1&loop=1&playlist=7aMOurgDB-o";
 
-  document.removeEventListener("click", startMusic);
-});
+  started = true;
+}
+
+function playMusic() {
+  if (!started) loadPlayer();
+  else ytCommand("playVideo");
+}
+
+function pauseMusic() {
+  ytCommand("pauseVideo");
+}
+
+function setVolume(val) {
+  const yt = document.getElementById("yt");
+  yt.contentWindow.postMessage(
+    '{"event":"command","func":"setVolume","args":[' + val + ']}',
+    "*"
+  );
+}
+
+function ytCommand(action) {
+  const yt = document.getElementById("yt");
+  yt.contentWindow.postMessage(
+    JSON.stringify({
+      event: "command",
+      func: action,
+      args: []
+    }),
+    "*"
+  );
+}
 </script>
 
 </body>
