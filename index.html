@@ -78,7 +78,6 @@
 
     .link:hover {
       transform: scale(1.06);
-      background: rgba(120, 0, 180, 0.5);
       box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
     }
 
@@ -101,6 +100,33 @@
     .copy-box:hover {
       transform: scale(1.06);
       box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
+    }
+
+    /* Copied popup */
+    .copied {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(168, 85, 247, 0.9);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      box-shadow: 0 0 20px #a855f7;
+
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .copied.show {
+      animation: pop 1.2s ease forwards;
+    }
+
+    @keyframes pop {
+      0% { opacity: 0; transform: translate(-50%, 20px); }
+      20% { opacity: 1; transform: translate(-50%, 0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -10px); }
     }
 
     .footer {
@@ -128,13 +154,29 @@
     <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
     <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord Server</a>
 
-    <div class="copy-box" onclick="navigator.clipboard.writeText('zci8')">
+    <div class="copy-box" onclick="copyText()">
       🎮 Ubisoft Connect: zci8
     </div>
 
     <div class="footer">made by zci8</div>
 
   </div>
+
+  <div id="copied" class="copied">Copied!</div>
+
+  <script>
+    function copyText() {
+      navigator.clipboard.writeText('zci8');
+
+      const popup = document.getElementById('copied');
+      popup.classList.remove('show');
+
+      // restart animation
+      void popup.offsetWidth;
+
+      popup.classList.add('show');
+    }
+  </script>
 
 </body>
 </html>
