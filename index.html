@@ -1,22 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>zci8</title>
-  <style>
-    body {
-      background: radial-gradient(circle at top, #1a0033, #000);
-      color: white;
-      font-family: Arial;
-      margin: 0;
-      min-height: 100vh;
 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      background: linear-gradient(-45deg, #0a001a, #1a0033, #000000, #2a0055);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
       text-align: center;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(20, 0, 40, 0.35);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .profile-pic {
@@ -25,48 +51,89 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #a855f7;
-      box-shadow: 0 0 15px #a855f7, 0 0 30px #7e22ce;
+      box-shadow: 0 0 20px #a855f7;
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin: 15px 0;
-      font-size: 34px;
+      font-size: 32px;
       color: #c084fc;
-      text-shadow: 0 0 10px #a855f7, 0 0 20px #7e22ce;
+      text-shadow: 0 0 10px #a855f7;
+      margin-bottom: 20px;
     }
 
     .link {
       display: block;
-      margin: 18px auto;
-      padding: 15px;
-      width: 240px;
-      background: rgba(30, 0, 50, 0.6);
+      margin: 12px auto;
+      padding: 14px 18px;
+      width: 260px;
       border-radius: 14px;
       text-decoration: none;
       color: white;
-      border: 1px solid #9333ea;
-      box-shadow: 0 0 10px #7e22ce;
-      transition: 0.3s;
+      background: rgba(40, 0, 70, 0.6);
+      border: 1px solid rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
+      transition: 0.25s ease;
     }
 
     .link:hover {
-      background: rgba(80, 0, 120, 0.8);
+      transform: scale(1.06);
+      background: rgba(120, 0, 180, 0.5);
       box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
-      transform: scale(1.08);
+    }
+
+    .copy-box {
+      display: block;
+      margin: 12px auto;
+      padding: 14px 18px;
+      width: 260px;
+      border-radius: 14px;
+
+      background: rgba(40, 0, 70, 0.6);
+      border: 1px solid rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
+
+      cursor: pointer;
+      transition: 0.25s ease;
+      user-select: all;
+    }
+
+    .copy-box:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 500px) {
+      .link, .copy-box {
+        width: 220px;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
 
-    <img class="profile-pic" src="pfp.jpg">
+    <img class="profile-pic" src="pfp.jpg" alt="Profile Picture">
 
     <h1>@zci8</h1>
 
     <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
     <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord Server</a>
-    <a class="link" href="https://ubisoftconnect.com" target="_blank">🎮 Ubisoft: zci8</a>
+
+    <!-- Copyable Ubisoft text -->
+    <div class="copy-box" onclick="navigator.clipboard.writeText('Ubisoft Connect: zci8')">
+      🎮 Ubisoft Connect: zci8
+    </div>
+
+    <div class="footer">made by zci8</div>
 
   </div>
 
