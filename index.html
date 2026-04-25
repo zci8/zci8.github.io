@@ -11,6 +11,41 @@
   box-sizing: border-box;
 }
 
+/* INTRO */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  animation: fadeOut 3.5s ease forwards;
+  animation-delay: 2.5s;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.intro-text {
+  color: red;
+  font-size: 28px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 15px red;
+  animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-1px, 1px); }
+  100% { transform: translate(0); }
+}
+
+/* BACKGROUND */
 body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
@@ -19,27 +54,45 @@ body {
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle, #1a0000, black);
+  overflow: hidden;
   cursor: pointer;
 }
 
-/* MAIN CARD */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #2a0000, black);
+  animation: pulse 5s infinite alternate;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  from { filter: brightness(0.7); }
+  to { filter: brightness(1.3); }
+}
+
+/* MAIN */
 .container {
   text-align: center;
   padding: 30px;
   border-radius: 20px;
   background: rgba(10,0,0,0.6);
   box-shadow: 0 0 30px red;
-  max-width: 320px;
+  animation: fadeIn 1s ease;
 }
 
-/* PROFILE */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .profile-pic {
   width: 110px;
   height: 110px;
   border-radius: 50%;
   border: 3px solid red;
   box-shadow: 0 0 20px red;
-  object-fit: cover;
 }
 
 h1 {
@@ -49,7 +102,7 @@ h1 {
 }
 
 /* LINKS */
-.link {
+.link, .copy-box {
   display: block;
   margin: 12px auto;
   padding: 14px;
@@ -58,81 +111,109 @@ h1 {
   background: rgba(40,0,0,0.6);
   border: 1px solid red;
   color: white;
+  cursor: pointer;
   text-decoration: none;
   transition: 0.2s;
 }
 
-.link:hover {
+.link:hover, .copy-box:hover {
   transform: scale(1.05);
   box-shadow: 0 0 20px red;
 }
 
 /* MUSIC PANEL */
 .music-panel {
-  margin-top: 15px;
+  margin: 12px auto;
+  width: 260px;
   padding: 12px;
-  border: 1px solid red;
   border-radius: 12px;
+  border: 1px solid red;
   background: rgba(30,0,0,0.5);
 }
 
 .music-btn {
-  padding: 10px 14px;
+  width: 100%;
+  padding: 10px;
   border-radius: 8px;
   border: 1px solid red;
   background: rgba(20,0,0,0.7);
   color: white;
   cursor: pointer;
-  margin-bottom: 10px;
-  width: 100%;
+  margin-bottom: 8px;
 }
 
 .music-btn:hover {
   box-shadow: 0 0 15px red;
 }
 
-/* VOLUME SLIDER */
 input[type="range"] {
   width: 100%;
   accent-color: red;
-  margin-top: 8px;
 }
 
-.small {
-  font-size: 12px;
-  opacity: 0.6;
-  margin-top: 10px;
+/* COPIED POPUP */
+.copied {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: red;
+  padding: 10px 20px;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+.copied.show {
+  animation: pop 1s forwards;
+}
+
+@keyframes pop {
+  0% { opacity: 0; transform: translate(-50%,20px); }
+  20% { opacity: 1; transform: translate(-50%,0); }
+  100% { opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- INTRO -->
+<div id="intro">
+  <div class="intro-text">SYSTEM BOOTING...</div>
+</div>
+
+<div class="bg"></div>
+
 <div class="container">
 
-  <img class="profile-pic" src="pfp.jpg" alt="pfp">
+  <img class="profile-pic" src="pfp.jpg">
   <h1>@zci8</h1>
 
   <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
   <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord</a>
 
-  <div class="link">🎮 Ubisoft Connect: zci8</div>
+  <div class="copy-box" onclick="copyText()">
+    🎮 Ubisoft Connect: zci8
+  </div>
 
-  <!-- MUSIC CONTROLS -->
+  <!-- MUSIC -->
   <div class="music-panel">
 
     <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
       ▶ Play Music
     </button>
 
-    <label>Volume</label>
-    <input type="range" min="0" max="100" value="100" id="volumeSlider">
+    <input type="range" min="0" max="100" value="100" id="volume">
 
   </div>
 
-  <div class="small">click anywhere once to enable audio</div>
+  <div style="margin-top:10px; font-size:12px; opacity:0.6;">
+    made by zci8
+  </div>
 
 </div>
+
+<div id="copied" class="copied">Copied!</div>
 
 <!-- AUDIO -->
 <audio id="music" loop preload="auto">
@@ -140,17 +221,32 @@ input[type="range"] {
 </audio>
 
 <script>
+/* COPY FUNCTION (UNCHANGED) */
+function copyText() {
+  navigator.clipboard.writeText('zci8');
+
+  const popup = document.getElementById('copied');
+  popup.classList.remove('show');
+  void popup.offsetWidth;
+  popup.classList.add('show');
+}
+
+/* MUSIC SYSTEM */
 let playing = false;
 let unlocked = false;
 
 const music = document.getElementById("music");
 const btn = document.getElementById("musicBtn");
-const volumeSlider = document.getElementById("volumeSlider");
+const volume = document.getElementById("volume");
 
-/* SET INITIAL VOLUME */
-music.volume = 1.0;
+/* volume control */
+music.volume = 1;
 
-/* CLICK ANYWHERE UNLOCK + AUTO START */
+volume.addEventListener("input", () => {
+  music.volume = volume.value / 100;
+});
+
+/* click anywhere unlock + start */
 document.addEventListener("click", () => {
   if (!unlocked) {
     music.play().then(() => {
@@ -161,7 +257,7 @@ document.addEventListener("click", () => {
   }
 });
 
-/* PLAY / PAUSE BUTTON */
+/* play/pause button */
 function toggleMusic() {
   if (!playing) {
     music.play().then(() => {
@@ -174,11 +270,6 @@ function toggleMusic() {
     btn.innerText = "▶ Play Music";
   }
 }
-
-/* VOLUME CONTROL */
-volumeSlider.addEventListener("input", () => {
-  music.volume = volumeSlider.value / 100;
-});
 </script>
 
 </body>
