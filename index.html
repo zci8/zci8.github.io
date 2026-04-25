@@ -66,18 +66,24 @@ h1 {
   box-shadow: 0 0 20px red;
 }
 
-/* MUSIC BUTTON (SAFE) */
+/* MUSIC BUTTON */
 .music-btn {
-  margin-top: 10px;
-  padding: 10px 16px;
+  margin-top: 15px;
+  padding: 12px 18px;
   border-radius: 10px;
   border: 1px solid red;
   background: rgba(30,0,0,0.6);
   color: white;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-/* OPTIONAL AUDIO */
+.music-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px red;
+}
+
+/* HIDDEN AUDIO */
 audio {
   display: none;
 }
@@ -94,7 +100,7 @@ audio {
 
 <div class="container">
 
-  <img class="profile-pic" src="pfp.jpg">
+  <img class="profile-pic" src="pfp.jpg" alt="pfp">
   <h1>@zci8</h1>
 
   <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
@@ -102,16 +108,18 @@ audio {
 
   <div class="link">🎮 Ubisoft Connect: zci8</div>
 
-  <!-- SAFE MUSIC (LOCAL FILE ONLY) -->
-  <button class="music-btn" onclick="toggleMusic()">▶ Play / Pause Music</button>
+  <!-- MUSIC BUTTON -->
+  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+    ▶ Play Music
+  </button>
 
-  <div class="small">stable build — no external scripts</div>
+  <div class="small">stable build — local audio only</div>
 
 </div>
 
-<!-- LOCAL AUDIO FILE (optional) -->
-<audio id="music" loop>
-  <source src="music.mp3" type="audio/mpeg">
+<!-- AUDIO -->
+<audio id="music" loop preload="auto">
+  <source src="./music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -119,13 +127,19 @@ let playing = false;
 
 function toggleMusic() {
   const music = document.getElementById("music");
+  const btn = document.getElementById("musicBtn");
 
   if (!playing) {
-    music.play().catch(() => {});
-    playing = true;
+    music.play().then(() => {
+      playing = true;
+      btn.innerText = "⏸ Pause Music";
+    }).catch(err => {
+      console.log("Playback blocked:", err);
+    });
   } else {
     music.pause();
     playing = false;
+    btn.innerText = "▶ Play Music";
   }
 }
 </script>
