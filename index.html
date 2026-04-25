@@ -5,94 +5,124 @@
 <title>zci8</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: white;
+  margin: 0;
+  font-family: Arial;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle, #1a0000, black);
-}
-
-.container {
-  text-align: center;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(10,0,0,0.6);
-  box-shadow: 0 0 30px red;
-  width: 340px;
-}
-
-.profile-pic {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 3px solid red;
-  box-shadow: 0 0 20px red;
-}
-
-h1 {
-  margin-top: 10px;
-  color: #ff2a2a;
-  text-shadow: 0 0 10px red;
-}
-
-.link {
-  display: block;
-  margin: 12px auto;
-  padding: 14px;
-  width: 260px;
-  border-radius: 12px;
-  background: rgba(40,0,0,0.6);
-  border: 1px solid red;
+  min-height: 100vh;
+  background: radial-gradient(circle, #12000a, black);
   color: white;
-  text-decoration: none;
-  transition: 0.2s;
 }
 
-.link:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px red;
+/* MAIN PANEL */
+.panel {
+  width: 340px;
+  padding: 25px;
+  border-radius: 18px;
+  background: rgba(20,0,30,0.7);
+  box-shadow: 0 0 25px #a855f7;
+  backdrop-filter: blur(10px);
 }
 
-/* spotify embed */
+/* HEADER */
+.title {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.song {
+  font-size: 20px;
+  margin-top: 5px;
+  color: #ff3df2;
+  text-shadow: 0 0 10px #a855f7;
+}
+
+/* PFP */
+.pfp {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #a855f7;
+  box-shadow: 0 0 15px #a855f7;
+  margin-bottom: 10px;
+}
+
+/* PROGRESS BAR */
+.bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #a855f7, #ff3df2);
+  box-shadow: 0 0 10px #a855f7;
+  animation: load 180s linear infinite;
+}
+
+/* fake sync animation (3 min loop) */
+@keyframes load {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* SPOTIFY */
 .spotify {
   margin-top: 15px;
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* LINKS */
+.link {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  background: rgba(50,0,60,0.5);
+  border: 1px solid #a855f7;
+  color: white;
+  text-decoration: none;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="panel">
 
-  <img class="profile-pic" src="pfp.jpg">
-  <h1>@zci8</h1>
+  <img class="pfp" src="pfp.jpg">
 
-  <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
-  <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord</a>
+  <div class="title">NOW PLAYING</div>
+  <div class="song">Unravel</div>
 
-  <div class="link">🎮 Ubisoft Connect: zci8</div>
+  <!-- fake visual progress -->
+  <div class="bar">
+    <div class="fill"></div>
+  </div>
 
-  <!-- 🎧 SPOTIFY PLAYER -->
+  <!-- Spotify embed -->
   <div class="spotify">
     <iframe style="border-radius:12px"
       src="https://open.spotify.com/embed/track/7aMOurgDB-o"
-      width="300"
+      width="100%"
       height="80"
       frameborder="0"
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
     </iframe>
   </div>
+
+  <a class="link" href="https://open.spotify.com" target="_blank">
+    🎧 Open Spotify
+  </a>
 
 </div>
 
