@@ -5,134 +5,175 @@
   <title>zci8</title>
 
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      min-height:100vh;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
-      color:white;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background: linear-gradient(-45deg,#0a001a,#1a0033,#000,#2a0055);
-      background-size:400% 400%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: linear-gradient(-45deg, #0a001a, #1a0033, #000000, #2a0055);
+      background-size: 400% 400%;
       animation: gradientMove 10s ease infinite;
     }
 
     @keyframes gradientMove {
-      0%{background-position:0% 50%;}
-      50%{background-position:100% 50%;}
-      100%{background-position:0% 50%;}
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
-      text-align:center;
-      padding:30px;
-      border-radius:20px;
-      background: rgba(20,0,40,0.35);
+      text-align: center;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(20, 0, 40, 0.35);
       backdrop-filter: blur(10px);
-      box-shadow:0 0 25px rgba(168,85,247,0.4);
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .profile-pic {
-      width:110px;
-      height:110px;
-      border-radius:50%;
-      border:3px solid #a855f7;
-      box-shadow:0 0 20px #a855f7;
-      margin-bottom:10px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #a855f7;
+      box-shadow: 0 0 20px #a855f7;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size:32px;
-      color:#c084fc;
-      text-shadow:0 0 10px #a855f7;
-      margin-bottom:20px;
+      font-size: 32px;
+      color: #c084fc;
+      text-shadow: 0 0 10px #a855f7;
+      margin-bottom: 20px;
     }
 
-    .link, .copy-box {
-      display:block;
-      margin:12px auto;
-      padding:14px;
-      width:260px;
-      border-radius:14px;
-      background:rgba(40,0,70,0.6);
-      border:1px solid rgba(168,85,247,0.6);
-      color:white;
-      text-decoration:none;
-      transition:.25s;
-      cursor:pointer;
+    .link {
+      display: block;
+      margin: 12px auto;
+      padding: 14px 18px;
+      width: 260px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: white;
+      background: rgba(40, 0, 70, 0.6);
+      border: 1px solid rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
+      transition: 0.25s ease;
     }
 
-    .link:hover, .copy-box:hover {
-      transform:scale(1.06);
-      box-shadow:0 0 20px #a855f7;
+    .link:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
+    }
+
+    .copy-box {
+      display: block;
+      margin: 12px auto;
+      padding: 14px 18px;
+      width: 260px;
+      border-radius: 14px;
+      background: rgba(40, 0, 70, 0.6);
+      border: 1px solid rgba(168, 85, 247, 0.6);
+      box-shadow: 0 0 10px rgba(126, 34, 206, 0.4);
+      cursor: pointer;
+      transition: 0.25s ease;
+      user-select: none;
+    }
+
+    .copy-box:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 20px #a855f7, 0 0 40px #7e22ce;
     }
 
     .copied {
-      position:fixed;
-      bottom:40px;
-      left:50%;
-      transform:translateX(-50%);
-      background:#a855f7;
-      padding:10px 20px;
-      border-radius:10px;
-      opacity:0;
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(168, 85, 247, 0.9);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      box-shadow: 0 0 20px #a855f7;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .copied.show {
-      animation: pop 1.2s forwards;
+      animation: pop 1.2s ease forwards;
     }
 
     @keyframes pop {
-      0%{opacity:0; transform:translate(-50%,20px);}
-      20%{opacity:1; transform:translate(-50%,0);}
-      100%{opacity:0;}
+      0% { opacity: 0; transform: translate(-50%, 20px); }
+      20% { opacity: 1; transform: translate(-50%, 0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -10px); }
     }
 
     .footer {
-      margin-top:10px;
-      font-size:12px;
-      opacity:0.6;
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 500px) {
+      .link, .copy-box {
+        width: 220px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <img class="profile-pic" src="pfp.jpg">
+    <img class="profile-pic" src="pfp.jpg" alt="Profile Picture">
 
-  <h1>@zci8</h1>
+    <h1>@zci8</h1>
 
-  <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
-  <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord Server</a>
+    <a class="link" href="https://www.tiktok.com/@zci8.r6" target="_blank">🎵 TikTok</a>
+    <a class="link" href="https://discord.com/invite/zci8" target="_blank">💬 Discord Server</a>
 
-  <div class="copy-box" onclick="copyText()">
-    🎮 Ubisoft Connect: zci8
+    <div class="copy-box" onclick="copyText()">
+      🎮 Ubisoft Connect: zci8
+    </div>
+
+    <div class="footer">made by zci8</div>
+
   </div>
 
-  <div class="footer">👀 Unique visitors tracked</div>
-  <div class="footer">made by zci8</div>
+  <div id="copied" class="copied">Copied!</div>
 
-</div>
+  <script>
+    function copyText() {
+      navigator.clipboard.writeText('zci8');
 
-<div id="copied" class="copied">Copied!</div>
+      const popup = document.getElementById('copied');
+      popup.classList.remove('show');
+      void popup.offsetWidth;
+      popup.classList.add('show');
+    }
+  </script>
 
-<script>
-function copyText() {
-  navigator.clipboard.writeText('zci8');
-  const popup = document.getElementById('copied');
-  popup.classList.remove('show');
-  void popup.offsetWidth;
-  popup.classList.add('show');
-}
-</script>
-
-<!-- UNIQUE VISITOR TRACKING -->
-<script data-goatcounter="https://zci8.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+  <!-- GoatCounter (MUST be live site) -->
+  <script data-goatcounter="https://zci8.goatcounter.com/count"
+          async src="https://gc.zgo.at/count.js"></script>
 
 </body>
 </html>
